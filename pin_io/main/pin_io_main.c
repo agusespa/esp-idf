@@ -45,7 +45,7 @@ void app_main(void) {
             gpio_set_level(LED_PIN, 0);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(100));
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 }
 
