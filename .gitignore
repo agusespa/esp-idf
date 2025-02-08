@@ -58,3 +58,6 @@ dkms.conf
 # ESP-IDF specific
 sdkconfig
 sdkconfig.ci
+
+# misc
+.DS_Store
