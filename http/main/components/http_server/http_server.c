@@ -13,6 +13,7 @@ static esp_err_t root_get_handler(httpd_req_t *req) {
 
 // Handler for GET /health
 static esp_err_t health_get_handler(httpd_req_t *req) {
+    ESP_LOGE(TAG, "GET /health");
     char response[128];
     snprintf(response, sizeof(response),
              "{ \"uptime\": %lu, \"free_heap\": %lu }",
