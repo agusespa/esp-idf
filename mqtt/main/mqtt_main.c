@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "components/http_server/http_server.h"
+#include "components/mqtt_client/my_mqtt_client.h"
 #include "components/wifi_utils/wifi_utils.h"
 #include "esp_event.h"
 #include "esp_log.h"
@@ -8,7 +8,7 @@
 #include "freertos/task.h"
 #include "nvs_flash.h"
 
-static const char* TAG = "http server";
+static const char* TAG = "MQTT_MAIN";
 
 void app_main() {
     esp_err_t nvs_err = nvs_flash_init();
@@ -26,10 +26,14 @@ void app_main() {
         return;
     }
 
-    ESP_LOGI(TAG, "Starting HTTP server...");
-    start_http_server();
+    esp_err_t mqtt_err = mqtt_app_start();
+    if (mqtt_err != ESP_OK) {
+        ESP_LOGE(TAG, "MQTT initialization failed. Stopping execution.");
+        return;
+    }
 
-    while (1) {
+    while (true) {
         vTaskDelay(pdMS_TO_TICKS(1000));
+        mqtt_publish("test/message", "Hello World! -from ESP32");
     }
 }

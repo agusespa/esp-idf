@@ -11,13 +11,13 @@ static const char* TAG = "wifi service";
 
 void app_main(void) {
     // Initialize NVS
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES ||
-        ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    esp_err_t nvs_err = nvs_flash_init();
+    if (nvs_err == ESP_ERR_NVS_NO_FREE_PAGES ||
+        nvs_err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
+        nvs_err = nvs_flash_init();
     }
-    ESP_ERROR_CHECK(ret);
+    ESP_ERROR_CHECK(nvs_err);
 
     ESP_LOGI(TAG, "Connecting to wi-fi ESP_WIFI_MODE_STA...");
     wifi_status_t status = wifi_init_sta();
