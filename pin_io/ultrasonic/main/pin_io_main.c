@@ -11,7 +11,7 @@
 #define ECHO_PIN GPIO_NUM_15
 #define LED_PIN GPIO_NUM_5
 #define SOUND_SPEED 0.034
-#define DISTANCE_THRESHOLD 10
+#define DISTANCE_THRESHOLD 20
 
 void send_pulse() {
     gpio_set_level(TRIG_PIN, 1);
@@ -64,7 +64,7 @@ void app_main(void) {
             gpio_set_level(LED_PIN, 0);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(100));
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
 

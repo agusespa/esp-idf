@@ -55,6 +55,7 @@ dkms.conf
 */build/
 */**/build/
 */.cache/
+*/**/.cache/
 
 # ESP-IDF specific
 sdkconfig
