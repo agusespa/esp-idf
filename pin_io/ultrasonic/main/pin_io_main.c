@@ -2,50 +2,69 @@
 
 #include "driver/gpio.h"
 #include "esp_err.h"
+#include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "rom/ets_sys.h"
 
-#define BUTTON_PIN GPIO_NUM_4
+#define TRIG_PIN GPIO_NUM_14
+#define ECHO_PIN GPIO_NUM_15
 #define LED_PIN GPIO_NUM_5
+#define SOUND_SPEED 0.034
+#define DISTANCE_THRESHOLD 10
+
+void send_pulse() {
+    gpio_set_level(TRIG_PIN, 1);
+    esp_rom_delay_us(10);
+    gpio_set_level(TRIG_PIN, 0);
+}
+
+uint32_t measure_pulse() {
+    while (gpio_get_level(ECHO_PIN) == 0);
+    uint32_t start = esp_timer_get_time();
+    while (gpio_get_level(ECHO_PIN) == 1);
+    uint32_t end = esp_timer_get_time();
+    return end - start;
+}
 
 void app_main(void) {
-    // Configure the button pin as input
-    gpio_config_t button_config = {.mode = GPIO_MODE_INPUT,
-                                   .pull_up_en = GPIO_PULLUP_DISABLE,
-                                   .pull_down_en = GPIO_PULLDOWN_DISABLE,
-                                   .intr_type = GPIO_INTR_DISABLE,
-                                   .pin_bit_mask = (1ULL << BUTTON_PIN)};
-    esp_err_t ret = gpio_config(&button_config);
-    if (ret != ESP_OK) {
-        printf("Failed to configure button GPIO: %s\n", esp_err_to_name(ret));
-        return;
-    }
-    printf("Button GPIO configured successfully!\n");
+    // Configure TRIG_PIN as output
+    gpio_config_t trig_config = {.mode = GPIO_MODE_OUTPUT,
+                                 .pull_up_en = GPIO_PULLUP_DISABLE,
+                                 .pull_down_en = GPIO_PULLDOWN_DISABLE,
+                                 .intr_type = GPIO_INTR_DISABLE,
+                                 .pin_bit_mask = (1ULL << TRIG_PIN)};
+    gpio_config(&trig_config);
 
-    // Configure the LED pin as output
+    // Configure ECHO_PIN as input
+    gpio_config_t echo_config = {.mode = GPIO_MODE_INPUT,
+                                 .pull_up_en = GPIO_PULLUP_DISABLE,
+                                 .pull_down_en = GPIO_PULLDOWN_DISABLE,
+                                 .intr_type = GPIO_INTR_DISABLE,
+                                 .pin_bit_mask = (1ULL << ECHO_PIN)};
+    gpio_config(&echo_config);
+
+    // Configure LED_PIN as output
     gpio_config_t led_config = {.mode = GPIO_MODE_OUTPUT,
                                 .pull_up_en = GPIO_PULLUP_DISABLE,
                                 .pull_down_en = GPIO_PULLDOWN_DISABLE,
                                 .intr_type = GPIO_INTR_DISABLE,
                                 .pin_bit_mask = (1ULL << LED_PIN)};
-    ret = gpio_config(&led_config);
-    if (ret != ESP_OK) {
-        printf("Failed to configure led GPIO: %s\n", esp_err_to_name(ret));
-        return;
-    }
-    printf("Led GPIO configured successfully!\n");
+    gpio_config(&led_config);
 
     while (1) {
-        int buttonState = gpio_get_level(BUTTON_PIN);
-        printf("Button State: %d\n", buttonState);
+        send_pulse();
+        uint32_t pulse_duration = measure_pulse();
+        float distance = (pulse_duration * SOUND_SPEED) / 2.0;
+        printf("Distance: %.2f cm\n", distance);
 
-        if (buttonState == 1) {
+        if (distance < DISTANCE_THRESHOLD) {
             gpio_set_level(LED_PIN, 1);
         } else {
             gpio_set_level(LED_PIN, 0);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
 
