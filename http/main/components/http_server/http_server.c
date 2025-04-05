@@ -17,8 +17,7 @@ static esp_err_t health_get_handler(httpd_req_t *req) {
     char response[128];
     snprintf(response, sizeof(response),
              "{ \"uptime\": %lu, \"free_heap\": %lu }",
-             esp_log_timestamp() / 1000,
-             esp_get_free_heap_size());
+             esp_log_timestamp() / 1000, esp_get_free_heap_size());
 
     httpd_resp_set_type(req, "application/json");
     httpd_resp_send(req, response, strlen(response));

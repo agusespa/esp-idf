@@ -29,7 +29,7 @@ void app_main() {
     ESP_LOGI(TAG, "Starting HTTP server...");
     start_http_server();
 
-    while (1) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
+    while (true) {
+        vTaskDelay(pdMS_TO_TICKS(3000));
     }
 }
