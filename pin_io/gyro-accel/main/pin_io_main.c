@@ -5,18 +5,19 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#define TAG "MPU6050"
+
 #define I2C_MASTER_SCL_IO 25
 #define I2C_MASTER_SDA_IO 26
 #define I2C_MASTER_NUM I2C_NUM_0
 #define I2C_MASTER_FREQ_HZ 400000
-#define MPU6050_ADDR 0x68
 
+#define MPU6050_ADDR 0x68
 #define MPU6050_PWR_MGMT_1 0x6B
 #define MPU6050_ACCEL_CONFIG 0x1C
 #define MPU6050_GYRO_CONFIG 0x1B
 #define MPU6050_CONFIG 0x1A
 #define MPU6050_ACCEL_XOUT_H 0x3B
-#define TAG "MPU6050"
 
 static esp_err_t mpu6050_write_byte(uint8_t reg, uint8_t data) {
     return i2c_master_write_to_device(I2C_MASTER_NUM, MPU6050_ADDR,
@@ -67,7 +68,6 @@ void app_main() {
             continue;
         }
 
-        // Raw sensor readings
         int16_t ax = read_word(data, 0);
         int16_t ay = read_word(data, 2);
         int16_t az = read_word(data, 4);
@@ -85,10 +85,10 @@ void app_main() {
         printf("Accel: X=%.2f Y=%.2f Z=%.2f m/s²\n", ax * accel_scale,
                ay * accel_scale, az * accel_scale);
 
-        printf("Gyro:  X=%.2f Y=%.2f Z=%.2f rad/s\n", gx * gyro_scale,
+        printf("Gyro: X=%.2f Y=%.2f Z=%.2f rad/s\n", gx * gyro_scale,
                gy * gyro_scale, gz * gyro_scale);
 
-        printf("Temp:  %.2f °C\n\n", temp);
+        printf("Temp: %.2f °C\n\n", temp);
 
         vTaskDelay(pdMS_TO_TICKS(500));
     }
