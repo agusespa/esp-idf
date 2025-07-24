@@ -1,0 +1,20 @@
+CompileFlags:
+  Add:
+    - -DESP_PLATFORM=1
+    - -DIDF_VER="v5.4"
+    - -DCONFIG_IDF_TARGET_ESP32=1
+    - -D__XTENSA__=1
+  Remove:
+    - -mlongcalls
+    - -fno-shrink-wrap
+    - -fstrict-volatile-bitfields
+    - -fno-tree-switch-conversion
+
+Diagnostics:
+  Suppress:
+    - drv_unknown_argument
+    - drv_unknown_argument_with_suggestion
+    - pp_file_not_found
+
+Index:
+  Background: Build
