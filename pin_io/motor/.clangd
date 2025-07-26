@@ -1,7 +1,6 @@
 CompileFlags:
   Add:
     - -DESP_PLATFORM=1
-    - -DIDF_VER="v5.4"
     - -DCONFIG_IDF_TARGET_ESP32=1
     - -D__XTENSA__=1
   Remove:

@@ -1,5 +1,7 @@
 CompileFlags:
   Add:
+    - -DIRAM_ATTR=
+    - -D__ESP_PLATFORM__=1
     - -DESP_PLATFORM=1
     - -DCONFIG_IDF_TARGET_ESP32=1
     - -D__XTENSA__=1
@@ -14,10 +16,6 @@ Diagnostics:
     - drv_unknown_argument
     - drv_unknown_argument_with_suggestion
     - pp_file_not_found
-  ClangTidy:
-    Remove:
-      - misc-unused-includes
-      - readability-redundant-preprocessor
 
 Index:
   Background: Build
