@@ -22,3 +22,5 @@ Diagnostics:
 
 Index:
   Background: Build
+
+CompilationDatabase: "build"
