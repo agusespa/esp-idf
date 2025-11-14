@@ -8,6 +8,7 @@ Each sub-project is a self-contained example that can be built and flashed indep
 * **wifi_sta**: how to connect to a wifi network (sta mode).
 * **http**: how to start up a basic http server.
 * **mqtt**: how to set up a mqtt broker.
+* **udp**: how to receive UDP messages for robot commands.
 * **config**: how to read the microcontroller data.
 * **pin_io**: collection of projects implementing io pins.
     * **button_led**: basic GPIO control with a button and an LED.
@@ -20,6 +21,9 @@ Each sub-project is a self-contained example that can be built and flashed indep
 - button_led: https://wokwi.com/projects/421682705203208193
 - ultrasonic: https://wokwi.com/projects/425941668822970369
 - gyro-accel: https://wokwi.com/projects/428034659779638273
+
+## Shared Components
+* **wifi_utils**: WiFi station connection utility used across projects. Update credentials in `components/wifi_utils/wifi_utils.c`.
 
 ## How to Use
 1. Install esp-idf and configure environment variables.
