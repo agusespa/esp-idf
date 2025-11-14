@@ -1,6 +1,6 @@
 # ESP-IDF Project Collection
 
-This repository contains a collection of ESP-IDF projects demonstrating the use of the ESP32 microcontroller. 
+Collection of ESP-IDF sample modules the use for development with ESP32 based microcontrollers. 
 Each sub-project is a self-contained example that can be built and flashed independently.
 
 ## Project List
