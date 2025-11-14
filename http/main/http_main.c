@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "components/http_server/http_server.h"
-#include "components/wifi_utils/wifi_utils.h"
+#include "wifi_utils.h"
 #include "esp_event.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"

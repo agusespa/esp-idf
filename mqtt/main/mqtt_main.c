@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "components/mqtt_client/my_mqtt_client.h"
-#include "components/wifi_utils/wifi_utils.h"
+#include "wifi_utils.h"
 #include "esp_event.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"

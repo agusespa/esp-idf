@@ -5,7 +5,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
-#include "wifi_utils/wifi_utils.h"
+#include "wifi_utils.h"
 
 static const char* TAG = "wifi service";
 
